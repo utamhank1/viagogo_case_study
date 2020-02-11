@@ -18,7 +18,15 @@ def parser_arguments():
 
 def main(args):
     path = args.path
-    print(f"path = {path}")
+
+    # Read in the dataset and convert to pandas dataframe.
+    dataset = pd.read_csv(path, index_col=[0])
+    dataset = pd.DataFrame(dataset)
+
+    # Remove the extraneous "Unnamed" columns.
+    dataset = dataset.loc[:, ~dataset.columns.str.contains('^Unnamed')]
+    print(dataset.head())
+
 
 
 if __name__ == "__main__":
